@@ -41,7 +41,7 @@ router.post("/", asyncHandler(async (req, res) => {
     }
 }));
 
-/* Shows book detail form */
+/* Shows book detail and update form*/
 router.get("/:id", asyncHandler(async (req, res) => {
   let book = await Book.findByPk(req.params.id);
   res.render("update-book", { book, title: "Update Book" });
