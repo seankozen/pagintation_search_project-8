@@ -96,3 +96,20 @@ input[type=text] {
   color: rgb(236, 15, 15);
 }
 
+/*Search Box stylings*/
+
+input.search {
+  margin: 0rem .5rem 0rem 0rem;
+  color: red;
+  border-radius: 3px;
+}
+
+input.search::placeholder {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+input.search {
+  color: #000;
+  font-weight: bold;
+}
