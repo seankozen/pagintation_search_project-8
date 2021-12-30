@@ -1,4 +1,7 @@
 form(class='search' action='/books/search', method='get')
       input#book-search(class='search' type='search' name='search' placeholder='Search for a book') 
       button(class='search-button' type='submit' value='Search') Search
+
+if search 
+      a(class='go-back' href='/') Return to Library
       

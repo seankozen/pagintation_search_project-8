@@ -21,3 +21,8 @@ block content
                 td= book.author 
                 td= book.genre 
                 td= book.year 
+    
+    ul.pagination
+      while links <= pageCount
+        li
+        a(class='button' href=`/books/?page=${links}`)= links++

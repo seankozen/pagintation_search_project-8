@@ -17,8 +17,19 @@ function asyncHandler(cb){
 
 /* Show full list of books */
 router.get("/", asyncHandler(async (req, res) => {
-  const books = await Book.findAll();
-  res.render("index", {books, title: "Books"} );
+  const page = parseInt(req.query.page)
+  !page || page <=0 ? res.redirect('?page=1') : null
+  const limit = 15;
+  const {count, rows} = await Book.findAndCountAll({
+    order: [['title', 'ASC']],
+    limit,
+    offset: (page -1) *limit
+  })
+  const pageCount = Math.ceil(count / limit)
+  page > pageCount ?
+  res.redirect(`?page=${pageCount}`) : null
+  let links = 1
+  res.render('index', {books: rows, pageCount, links, title: "Books"})
 }));
 
 /* Create new book form */
@@ -32,7 +43,7 @@ router.get("/new", (req, res) => {
 router.get("/search", asyncHandler(async (req, res) => {
   const search = req.query.search.toLowerCase()
   const page = parseInt(req.query.page)
-  !page || page <=0 ? res.redirect(`search?search=${search}&page=1`) : null
+  !page || page <= 0 ? res.redirect(`search?search=${search}&page=1`) : null
   const limit = 10
   const {count, rows} = await Book.findAndCountAll({
     where:{
@@ -51,7 +62,7 @@ router.get("/search", asyncHandler(async (req, res) => {
         },
       ]
     },
-    order: [['createdAt', 'DESC']],
+    order: [['title', 'ASC']],
     limit,
     offset: (page -1) *limit
   })
@@ -60,7 +71,7 @@ router.get("/search", asyncHandler(async (req, res) => {
     const pageCount = Math.ceil(count / limit)
     page > pageCount ?
     res.redirect(`?search=${search}&page=${pageCount}`) : null
-    res.render('index', {books: rows, pageCount, links, search})
+    res.render('index', {books: rows, pageCount, links, search, title: "Books Found"})
   }else{
     res.render('page-not-found', {search})
   }
