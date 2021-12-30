@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const Book = require('../models').Book;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 
 function asyncHandler(cb){
@@ -24,6 +26,45 @@ router.get("/new", (req, res) => {
   res.render("newbook", { book: {}, title: "New Book" });
 	
 });
+
+
+// Search for book in database
+router.get("/search", asyncHandler(async (req, res) => {
+  const search = req.query.search.toLowerCase()
+  const page = parseInt(req.query.page)
+  !page || page <=0 ? res.redirect(`search?search=${search}&page=1`) : null
+  const limit = 10
+  const {count, rows} = await Book.findAndCountAll({
+    where:{
+      [Op.or]:[
+        {
+          title:{[Op.like]: `%${search}%`}
+        },
+        {
+          author:{[Op.like]: `%${search}%`}
+        },
+        {
+          genre:{[Op.like]: `%${search}%`}
+        },
+        {
+          year:{[Op.like]: `%${search}%`}
+        },
+      ]
+    },
+    order: [['createdAt', 'DESC']],
+    limit,
+    offset: (page -1) *limit
+  })
+  if(count > 0){
+    let links = 1
+    const pageCount = Math.ceil(count / limit)
+    page > pageCount ?
+    res.redirect(`?search=${search}&page=${pageCount}`) : null
+    res.render('index', {books: rows, pageCount, links, search})
+  }else{
+    res.render('page-not-found', {search})
+  }
+}));
 
 /* Post new book to database */
 router.post("/", asyncHandler(async (req, res) => {

@@ -113,3 +113,10 @@ input.search {
   color: #000;
   font-weight: bold;
 }
+
+button.search-button{
+  color: #019875;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.4s;
+}

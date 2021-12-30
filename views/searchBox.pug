@@ -1,4 +1,4 @@
-p(class='search')
-      input#site-search(class='search' type='search' name='search' placeholder='Search for a book') 
-      a.button(class='search-button') Search
+form(class='search' action='/books/search', method='get')
+      input#book-search(class='search' type='search' name='search' placeholder='Search for a book') 
+      button(class='search-button' type='submit' value='Search') Search
       
