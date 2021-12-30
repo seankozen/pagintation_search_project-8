@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);      //Use index.js routes
 app.use('/books', booksRouter); //Use book.js routes
 
-
+//Database connection confirmation
 (async() => {
   try {
     await sequelize.authenticate();
@@ -42,10 +42,11 @@ app.use('/books', booksRouter); //Use book.js routes
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const error = new Error("The page you are looking for does not exist.");
+  const error = new Error();
+  error.message = "The page you are looking for does not exist.";
   error.status = 404;
+  console.log("The page you are looking for is not there.");
   res.status(404).render("page-not-found", {error});
-  next(error);
 });
 
 // error handler
