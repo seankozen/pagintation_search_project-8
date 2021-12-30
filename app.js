@@ -8,7 +8,6 @@ const sequelize = require('./models').sequelize;
 const pug = require('pug');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var booksRouter = require('./routes/books');
 const { Console } = require('console');
 
