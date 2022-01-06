@@ -18,7 +18,14 @@ function asyncHandler(cb){
 /* Show full list of books */
 router.get("/", asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page)
-  !page || page <=0 ? res.redirect('?page=1') : null
+  
+  if (!page || page <= 0) {
+    res.redirect('?page=1')
+  } else {
+    null;
+  }
+  
+  //!page || page <=0 ? res.redirect('?page=1') : null
   const limit = 15;
   const {count, rows} = await Book.findAndCountAll({
     order: [['title', 'ASC']],
