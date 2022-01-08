@@ -103,7 +103,7 @@ input[type=text] {
 input.search {
   margin: 0rem .5rem 0rem 0rem;
   color: red;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 input.search::placeholder {
@@ -118,12 +118,12 @@ input.search {
 }
 
 button.search-button {
-  color: #019875;
+  color: white;
   text-decoration: none;
   font-weight: bold;
   transition: 0.4s;
-  background-color: lightgray;
-  border-color: lightgray;
+  background-color: gray;
+  border-color: gray;
   border-radius: 2px;
 }
 
