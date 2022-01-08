@@ -117,11 +117,14 @@ input.search {
   margin-bottom: 1rem;
 }
 
-button.search-button{
+button.search-button {
   color: #019875;
   text-decoration: none;
   font-weight: bold;
   transition: 0.4s;
+  background-color: lightgray;
+  border-color: lightgray;
+  border-radius: 2px;
 }
 
 .pagination{
